@@ -55,6 +55,64 @@ module "mongodb" {
 
   maintenance_window = "02:00-03:00"
 
+  # Database Users & Roles
+  create_database_users = true
+  database_users = [
+    {
+      name     = "appuser"
+      password = "AppUser123!"
+      db_name  = "admin"
+      roles = [
+        {
+          name    = "readWrite"
+          db_name = "admin"
+        }
+      ]
+    },
+    {
+      name     = "readonly"
+      password = "ReadOnly123!"
+      db_name  = "admin"
+      roles = [
+        {
+          name    = "read"
+          db_name = "admin"
+        }
+      ]
+    }
+  ]
+
+  create_database_roles = true
+  database_roles = [
+    {
+      name    = "custom_role"
+      db_name = "admin"
+      roles = [
+        {
+          name    = "read"
+          db_name = "admin"
+        }
+      ]
+    }
+  ]
+
+  # LTS Logging
+  create_lts_logs = true
+  lts_logs = [
+    {
+      log_type     = "audit_log"
+      lts_group_id = module.lts.log_group_id
+      lts_stream_id = module.lts.log_stream_ids["${local.name}-audit-log"]
+    }
+  ]
+
+  # Audit Log Policy
+  create_audit_log_policy = true
+  audit_log_keep_days     = 30
+  audit_log_scope         = "all"
+  audit_log_types         = ["auth", "insert", "delete", "update", "query", "command"]
+  audit_log_reserve_auditlogs = "true"
+
   tags = local.tags
 }
 
@@ -63,7 +121,7 @@ module "mongodb" {
 ################################################################################
 
 module "vpc" {
-  source = "../../../terraform-huawei-vpc"
+  source = "github.com/artifactsystems/terraform-huawei-vpc?ref=v1.0.0"
 
   name = local.name
   cidr = local.vpc_cidr
@@ -76,7 +134,7 @@ module "vpc" {
 }
 
 module "security_group" {
-  source = "../../../terraform-huawei-security-group"
+  source = "github.com/artifactsystems/terraform-huawei-security-group?ref=v1.0.0"
 
   name        = local.name
   description = "Replica Set MongoDB example security group"
@@ -89,6 +147,21 @@ module "security_group" {
       description = "MongoDB access from within VPC"
       cidr_blocks = module.vpc.vpc_cidr_block
     },
+  ]
+
+  tags = local.tags
+}
+module "lts" {
+  source = "github.com/artifactsystems/terraform-huawei-lts?ref=v1.0.0"
+
+  group_name  = "${local.name}-logs"
+  ttl_in_days = 30
+
+  log_streams = [
+    {
+      name        = "${local.name}-audit-log"
+      ttl_in_days = 30
+    }
   ]
 
   tags = local.tags

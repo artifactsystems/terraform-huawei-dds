@@ -23,3 +23,27 @@ output "dds_instance_groups" {
   value       = module.mongodb_cluster.dds_instance_groups
 }
 
+# Database Users & Roles
+output "database_users" {
+  description = "Map of database users created for the DDS instance"
+  value       = module.mongodb_cluster.database_users
+  sensitive   = true
+}
+
+output "database_roles" {
+  description = "Map of database roles created for the DDS instance"
+  value       = module.mongodb_cluster.database_roles
+}
+
+# LTS Logging
+output "lts_logs" {
+  description = "Map of LTS log configurations for the DDS instance"
+  value       = module.mongodb_cluster.lts_logs
+}
+
+# Audit Log Policy
+output "audit_log_policy_id" {
+  description = "The audit log policy ID"
+  value       = module.mongodb_cluster.audit_log_policy_id
+}
+

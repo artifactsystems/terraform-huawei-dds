@@ -47,3 +47,36 @@ output "dds_instance_time_zone" {
   value       = try(module.dds_instance[0].time_zone, null)
 }
 
+################################################################################
+# Database Users & Roles
+################################################################################
+
+output "database_users" {
+  description = "Map of database users created for the DDS instance"
+  value       = { for k, v in huaweicloud_dds_database_user.this : k => v }
+  sensitive   = true
+}
+
+output "database_roles" {
+  description = "Map of database roles created for the DDS instance"
+  value       = { for k, v in huaweicloud_dds_database_role.this : k => v }
+}
+
+################################################################################
+# LTS Logging
+################################################################################
+
+output "lts_logs" {
+  description = "Map of LTS log configurations for the DDS instance"
+  value       = { for k, v in huaweicloud_dds_lts_log.this : k => v }
+}
+
+################################################################################
+# Audit Log Policy
+################################################################################
+
+output "audit_log_policy_id" {
+  description = "The audit log policy ID"
+  value       = try(huaweicloud_dds_audit_log_policy.this[0].id, null)
+}
+

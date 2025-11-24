@@ -335,6 +335,155 @@ variable "auto_renew" {
 }
 
 ################################################################################
+# Database Users & Roles
+################################################################################
+
+variable "create_database_users" {
+  description = "Whether to create database users for the DDS instance"
+  type        = bool
+  default     = false
+}
+
+variable "database_users" {
+  description = <<-EOF
+    List of database users to create for the DDS instance.
+    
+    Example:
+    [
+      {
+        name     = "appuser"
+        password = "SecurePassword123!"
+        db_name  = "mydb"
+        roles = [
+          {
+            name    = "readWrite"
+            db_name = "mydb"
+          }
+        ]
+      }
+    ]
+  EOF
+  type = list(object({
+    name     = string
+    password = string
+    db_name  = string
+    roles    = optional(list(object({
+      name    = string
+      db_name = string
+    })), [])
+  }))
+  default = []
+}
+
+variable "create_database_roles" {
+  description = "Whether to create database roles for the DDS instance"
+  type        = bool
+  default     = false
+}
+
+variable "database_roles" {
+  description = <<-EOF
+    List of database roles to create for the DDS instance.
+    
+    Example:
+    [
+      {
+        name    = "readonly_role"
+        db_name = "mydb"
+        roles = [
+          {
+            name    = "read"
+            db_name = "mydb"
+          }
+        ]
+      }
+    ]
+  EOF
+  type = list(object({
+    name    = string
+    db_name = string
+    roles   = optional(list(object({
+      name    = string
+      db_name = string
+    })), [])
+  }))
+  default = []
+}
+
+################################################################################
+# LTS Logging
+################################################################################
+
+variable "create_lts_logs" {
+  description = "Whether to create LTS log configurations for the DDS instance"
+  type        = bool
+  default     = false
+}
+
+variable "lts_logs" {
+  description = <<-EOF
+    List of LTS log configurations for the DDS instance.
+    
+    Example:
+    [
+      {
+        log_type     = "audit_log"
+        lts_group_id = "group-id-xxxxx"
+        lts_stream_id = "stream-id-xxxxx"
+      }
+    ]
+  EOF
+  type = list(object({
+    log_type     = string
+    lts_group_id = string
+    lts_stream_id = string
+  }))
+  default = []
+}
+
+################################################################################
+# Audit Log Policy
+################################################################################
+
+variable "create_audit_log_policy" {
+  description = "Whether to create an audit log policy for the DDS instance"
+  type        = bool
+  default     = false
+}
+
+variable "audit_log_keep_days" {
+  description = "Specifies the number of days for storing audit logs. The value ranges from 7 to 732"
+  type        = number
+  default     = 7
+}
+
+variable "audit_log_scope" {
+  description = <<-EOF
+    Specifies the audit scope. If this parameter is left blank or set to 'all', all audit log policies are enabled.
+    You can enter the database or collection name. Use commas (,) to separate multiple databases or collections.
+    Maximum 1024 characters.
+  EOF
+  type        = string
+  default     = null
+}
+
+variable "audit_log_types" {
+  description = "Specifies the audit type. Valid values: auth, insert, delete, update, query, command"
+  type        = list(string)
+  default     = null
+}
+
+variable "audit_log_reserve_auditlogs" {
+  description = <<-EOF
+    Specifies whether the historical audit logs are retained when SQL audit is disabled.
+    true (default): indicates that historical audit logs are retained when SQL audit is disabled.
+    false: indicates that existing historical audit logs are deleted when SQL audit is disabled.
+  EOF
+  type        = string
+  default     = null
+}
+
+################################################################################
 # Timeouts
 ################################################################################
 

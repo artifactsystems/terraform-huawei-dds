@@ -66,3 +66,101 @@ module "dds_instance" {
   timeouts = var.timeouts
 }
 
+################################################################################
+# Database Users
+################################################################################
+
+locals {
+  create_database_users = var.create_database_users && local.create_dds_instance
+}
+
+resource "huaweicloud_dds_database_user" "this" {
+  for_each = local.create_database_users ? { for user in var.database_users : "${user.db_name}/${user.name}" => user } : {}
+
+  instance_id = module.dds_instance[0].id
+  name        = each.value.name
+  password    = each.value.password
+  db_name     = each.value.db_name
+
+  dynamic "roles" {
+    for_each = each.value.roles != null ? each.value.roles : []
+    content {
+      name    = roles.value.name
+      db_name = roles.value.db_name
+    }
+  }
+
+  depends_on = [module.dds_instance]
+}
+
+################################################################################
+# Database Roles
+################################################################################
+
+locals {
+  create_database_roles = var.create_database_roles && local.create_dds_instance
+}
+
+resource "huaweicloud_dds_database_role" "this" {
+  for_each = local.create_database_roles ? { for role in var.database_roles : "${role.db_name}/${role.name}" => role } : {}
+
+  instance_id = module.dds_instance[0].id
+  name        = each.value.name
+  db_name     = each.value.db_name
+
+  dynamic "roles" {
+    for_each = each.value.roles != null ? each.value.roles : []
+    content {
+      name    = roles.value.name
+      db_name = roles.value.db_name
+    }
+  }
+
+  depends_on = [module.dds_instance]
+}
+
+################################################################################
+# LTS Logging
+################################################################################
+
+locals {
+  create_lts_logs = var.create_lts_logs && local.create_dds_instance
+}
+
+resource "huaweicloud_dds_lts_log" "this" {
+  for_each = local.create_lts_logs ? { for log in var.lts_logs : log.log_type => log } : {}
+
+  instance_id   = module.dds_instance[0].id
+  log_type      = each.value.log_type
+  lts_group_id  = each.value.lts_group_id
+  lts_stream_id = each.value.lts_stream_id
+
+  depends_on = [module.dds_instance]
+}
+
+################################################################################
+# Audit Log Policy
+################################################################################
+
+resource "huaweicloud_dds_audit_log_policy" "this" {
+  count = var.create_audit_log_policy && local.create_dds_instance ? 1 : 0
+
+  instance_id = module.dds_instance[0].id
+  keep_days   = var.audit_log_keep_days
+
+  audit_scope         = var.audit_log_scope
+  audit_types         = var.audit_log_types
+  reserve_auditlogs   = var.audit_log_reserve_auditlogs
+
+  depends_on = [
+    module.dds_instance,
+    huaweicloud_dds_lts_log.this
+  ]
+
+  timeouts {
+    create = "10m"
+    update = "10m"
+    delete = "10m"
+  }
+}
+
