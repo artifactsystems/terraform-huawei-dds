@@ -8,7 +8,7 @@ Terraform module which creates DDS (Document Database Service) instances on Huaw
 
 ```hcl
 module "mongodb" {
-  source = "github.com/artifactsystems/terraform-huawei-dds"
+  source = "github.com/artifactsystems/terraform-huawei-dds?ref=v1.1.0"
 
   identifier = "my-mongodb"
   
@@ -52,7 +52,7 @@ module "mongodb" {
 
 ```hcl
 module "mongodb_cluster" {
-  source = "github.com/artifactsystems/terraform-huawei-dds"
+  source = "github.com/artifactsystems/terraform-huawei-dds?ref=v1.1.0"
 
   identifier = "my-mongodb-cluster"
   
