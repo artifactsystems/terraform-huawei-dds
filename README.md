@@ -242,3 +242,9 @@ See [variables.tf](./variables.tf) for the complete list of available variables.
 | dds_instance_time_zone | The time zone |
 
 See [outputs.tf](./outputs.tf) for the complete list of available outputs.
+
+## Contributing
+
+Report issues/questions/feature requests in the [issues](https://github.com/artifactsystems/terraform-huawei-dds/issues/new) section.
+
+Full contributing [guidelines are covered here](.github/CONTRIBUTING.md).
