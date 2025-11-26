@@ -42,4 +42,3 @@ output "time_zone" {
   description = "The time zone"
   value       = huaweicloud_dds_instance.this.time_zone
 }
-

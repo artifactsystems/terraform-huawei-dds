@@ -85,15 +85,15 @@ variable "disk_encryption_id" {
 variable "flavors" {
   description = <<-EOF
     List of flavor configurations for the DDS instance.
-    
+
     For Sharding mode:
     - mongos: type = "mongos", num = 2-16, spec_code required, storage/size not applicable
     - shard: type = "shard", num = 2-16, spec_code required, storage/size required
     - config: type = "config", num = 1, spec_code required, storage/size required
-    
+
     For ReplicaSet mode:
     - replica: type = "replica", num = 3/5/7, spec_code required, storage/size required
-    
+
     Example for Sharding:
     [
       {
@@ -116,7 +116,7 @@ variable "flavors" {
         spec_code = "dds.mongodb.c3.large.2.config"
       }
     ]
-    
+
     Example for ReplicaSet:
     [
       {
@@ -152,7 +152,7 @@ variable "configuration_type" {
 variable "backup_strategy" {
   description = <<-EOF
     Backup strategy configuration.
-    
+
     Example:
     {
       start_time = "08:00-09:00"
@@ -280,4 +280,3 @@ variable "timeouts" {
   type        = map(string)
   default     = {}
 }
-

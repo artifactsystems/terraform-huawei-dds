@@ -46,4 +46,3 @@ output "audit_log_policy_id" {
   description = "The audit log policy ID"
   value       = module.mongodb.audit_log_policy_id
 }
-

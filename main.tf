@@ -17,21 +17,21 @@ module "dds_instance" {
   count  = local.create_dds_instance ? 1 : 0
   source = "./modules/dds_instance"
 
-  name            = local.instance_name
-  use_name_prefix = var.use_identifier_prefix
-  region          = var.region
-  mode               = var.mode
-  availability_zone  = var.availability_zone
-  vpc_id             = var.vpc_id
-  subnet_id          = var.subnet_id
-  security_group_id  = var.security_group_id
+  name              = local.instance_name
+  use_name_prefix   = var.use_identifier_prefix
+  region            = var.region
+  mode              = var.mode
+  availability_zone = var.availability_zone
+  vpc_id            = var.vpc_id
+  subnet_id         = var.subnet_id
+  security_group_id = var.security_group_id
 
-  datastore_type        = var.datastore_type
-  datastore_version     = var.datastore_version
+  datastore_type           = var.datastore_type
+  datastore_version        = var.datastore_version
   datastore_storage_engine = var.datastore_storage_engine
 
-  password          = var.password
-  port              = var.port
+  password           = var.password
+  port               = var.port
   disk_encryption_id = var.disk_encryption_id
 
   flavors = var.flavors
@@ -44,17 +44,17 @@ module "dds_instance" {
   maintain_begin = local.maintenance_begin
   maintain_end   = local.maintenance_end
 
-  replica_set_name        = var.replica_set_name
-  client_network_ranges    = var.client_network_ranges
-  ssl                     = var.ssl
+  replica_set_name                = var.replica_set_name
+  client_network_ranges           = var.client_network_ranges
+  ssl                             = var.ssl
   second_level_monitoring_enabled = var.second_level_monitoring_enabled
-  slow_log_desensitization = var.slow_log_desensitization
-  balancer_status         = var.balancer_status
-  balancer_active_begin   = var.balancer_active_begin
-  balancer_active_end     = var.balancer_active_end
+  slow_log_desensitization        = var.slow_log_desensitization
+  balancer_status                 = var.balancer_status
+  balancer_active_begin           = var.balancer_active_begin
+  balancer_active_end             = var.balancer_active_end
 
   enterprise_project_id = var.enterprise_project_id
-  description          = var.description
+  description           = var.description
 
   charging_mode = var.charging_mode
   period_unit   = var.period_unit
@@ -148,9 +148,9 @@ resource "huaweicloud_dds_audit_log_policy" "this" {
   instance_id = module.dds_instance[0].id
   keep_days   = var.audit_log_keep_days
 
-  audit_scope         = var.audit_log_scope
-  audit_types         = var.audit_log_types
-  reserve_auditlogs   = var.audit_log_reserve_auditlogs
+  audit_scope       = var.audit_log_scope
+  audit_types       = var.audit_log_types
+  reserve_auditlogs = var.audit_log_reserve_auditlogs
 
   depends_on = [
     module.dds_instance,
@@ -163,4 +163,3 @@ resource "huaweicloud_dds_audit_log_policy" "this" {
     delete = "10m"
   }
 }
-

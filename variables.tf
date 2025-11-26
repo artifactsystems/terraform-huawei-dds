@@ -132,15 +132,15 @@ variable "disk_encryption_id" {
 variable "flavors" {
   description = <<-EOF
     List of flavor configurations for the DDS instance.
-    
+
     For Sharding mode:
     - mongos: type = "mongos", num = 2-16, spec_code required, storage/size not applicable
     - shard: type = "shard", num = 2-16, spec_code required, storage/size required
     - config: type = "config", num = 1, spec_code required, storage/size required
-    
+
     For ReplicaSet mode:
     - replica: type = "replica", num = 3/5/7, spec_code required, storage/size required
-    
+
     Example for Sharding:
     [
       {
@@ -163,7 +163,7 @@ variable "flavors" {
         spec_code = "dds.mongodb.c3.large.2.config"
       }
     ]
-    
+
     Example for ReplicaSet:
     [
       {
@@ -207,7 +207,7 @@ variable "configuration_type" {
 variable "backup_strategy" {
   description = <<-EOF
     Backup strategy configuration for automated backups.
-    
+
     Example:
     {
       start_time = "08:00-09:00"
@@ -347,7 +347,7 @@ variable "create_database_users" {
 variable "database_users" {
   description = <<-EOF
     List of database users to create for the DDS instance.
-    
+
     Example:
     [
       {
@@ -367,7 +367,7 @@ variable "database_users" {
     name     = string
     password = string
     db_name  = string
-    roles    = optional(list(object({
+    roles = optional(list(object({
       name    = string
       db_name = string
     })), [])
@@ -384,7 +384,7 @@ variable "create_database_roles" {
 variable "database_roles" {
   description = <<-EOF
     List of database roles to create for the DDS instance.
-    
+
     Example:
     [
       {
@@ -402,7 +402,7 @@ variable "database_roles" {
   type = list(object({
     name    = string
     db_name = string
-    roles   = optional(list(object({
+    roles = optional(list(object({
       name    = string
       db_name = string
     })), [])
@@ -423,7 +423,7 @@ variable "create_lts_logs" {
 variable "lts_logs" {
   description = <<-EOF
     List of LTS log configurations for the DDS instance.
-    
+
     Example:
     [
       {
@@ -434,8 +434,8 @@ variable "lts_logs" {
     ]
   EOF
   type = list(object({
-    log_type     = string
-    lts_group_id = string
+    log_type      = string
+    lts_group_id  = string
     lts_stream_id = string
   }))
   default = []
@@ -492,4 +492,3 @@ variable "timeouts" {
   type        = map(string)
   default     = {}
 }
-

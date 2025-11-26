@@ -100,8 +100,8 @@ module "mongodb_cluster" {
   create_lts_logs = true
   lts_logs = [
     {
-      log_type     = "audit_log"
-      lts_group_id = module.lts.log_group_id
+      log_type      = "audit_log"
+      lts_group_id  = module.lts.log_group_id
       lts_stream_id = module.lts.log_stream_ids["${local.name}-audit-log"]
     }
   ]
@@ -166,4 +166,3 @@ module "lts" {
 
   tags = local.tags
 }
-

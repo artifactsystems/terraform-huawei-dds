@@ -100,17 +100,17 @@ module "mongodb" {
   create_lts_logs = true
   lts_logs = [
     {
-      log_type     = "audit_log"
-      lts_group_id = module.lts.log_group_id
+      log_type      = "audit_log"
+      lts_group_id  = module.lts.log_group_id
       lts_stream_id = module.lts.log_stream_ids["${local.name}-audit-log"]
     }
   ]
 
   # Audit Log Policy
-  create_audit_log_policy = true
-  audit_log_keep_days     = 30
-  audit_log_scope         = "all"
-  audit_log_types         = ["auth", "insert", "delete", "update", "query", "command"]
+  create_audit_log_policy     = true
+  audit_log_keep_days         = 30
+  audit_log_scope             = "all"
+  audit_log_types             = ["auth", "insert", "delete", "update", "query", "command"]
   audit_log_reserve_auditlogs = "true"
 
   tags = local.tags
@@ -166,4 +166,3 @@ module "lts" {
 
   tags = local.tags
 }
-

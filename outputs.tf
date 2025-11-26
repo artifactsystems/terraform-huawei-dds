@@ -79,4 +79,3 @@ output "audit_log_policy_id" {
   description = "The audit log policy ID"
   value       = try(huaweicloud_dds_audit_log_policy.this[0].id, null)
 }
-

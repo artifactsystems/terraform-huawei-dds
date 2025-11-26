@@ -11,7 +11,7 @@ module "mongodb" {
   source = "github.com/artifactsystems/terraform-huawei-dds?ref=v1.1.0"
 
   identifier = "my-mongodb"
-  
+
   mode              = "ReplicaSet"
   availability_zone = "tr-west-1a"
   vpc_id            = "vpc-xxxxx"
@@ -55,7 +55,7 @@ module "mongodb_cluster" {
   source = "github.com/artifactsystems/terraform-huawei-dds?ref=v1.1.0"
 
   identifier = "my-mongodb-cluster"
-  
+
   mode              = "Sharding"
   availability_zone = "tr-west-1a"
   vpc_id            = "vpc-xxxxx"

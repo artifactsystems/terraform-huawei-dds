@@ -7,8 +7,8 @@ resource "huaweicloud_dds_instance" "this" {
   subnet_id         = var.subnet_id
   security_group_id = var.security_group_id
 
-  password          = var.password
-  port              = var.port
+  password           = var.password
+  port               = var.port
   disk_encryption_id = var.disk_encryption_id
 
   datastore {
@@ -48,17 +48,17 @@ resource "huaweicloud_dds_instance" "this" {
   maintain_begin = var.maintain_begin
   maintain_end   = var.maintain_end
 
-  replica_set_name        = var.replica_set_name
-  client_network_ranges    = var.client_network_ranges
-  ssl                     = var.ssl
+  replica_set_name                = var.replica_set_name
+  client_network_ranges           = var.client_network_ranges
+  ssl                             = var.ssl
   second_level_monitoring_enabled = var.second_level_monitoring_enabled
-  slow_log_desensitization = var.slow_log_desensitization
-  balancer_status         = var.balancer_status
-  balancer_active_begin   = var.balancer_active_begin
-  balancer_active_end     = var.balancer_active_end
+  slow_log_desensitization        = var.slow_log_desensitization
+  balancer_status                 = var.balancer_status
+  balancer_active_begin           = var.balancer_active_begin
+  balancer_active_end             = var.balancer_active_end
 
   enterprise_project_id = var.enterprise_project_id
-  description          = var.description
+  description           = var.description
 
   charging_mode = var.charging_mode
   period_unit   = var.period_unit
@@ -84,4 +84,3 @@ resource "huaweicloud_dds_instance" "this" {
     ]
   }
 }
-
